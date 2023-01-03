@@ -167,3 +167,7 @@ def main():
                 'model': model.state_dict(),
                 'optimizer': optimizer.state_dict()
             }, 'model_checkpoint_' + str(iteration) + '.pth')
+            
+
+if __name__ == '__main__':
+    main()
