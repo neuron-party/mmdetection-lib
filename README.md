@@ -57,7 +57,7 @@ train_cfg, test_cfg = edict(...), edict(...)
 
 detector = ATSS(backbone_cfg, neck_cfg, head_cfg, train_cfg, test_cfg, ...)
 ```
-
+**may need to run pip install -v -e . in the mmdetection folder again**
 ## notes
 all custom models are prefixed with `slpy_modelname.py` to avoid conflicting file names in the case of similar/reimplemented models <br>
 this repo is primarily used for reimplementing and trying new necks/heads (backbones are boring XD)

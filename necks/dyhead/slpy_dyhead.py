@@ -8,6 +8,20 @@ from ..builder import NECKS
 
 
 @NECKS.register_module()
+class SleepyDyHead(nn.Module):
+    def __init__(self, in_channels, out_channels, num_layers): # can add more args later
+        super().__init__()
+        self.layers = nn.ModuleList([
+            DyHeadBlock(in_channels=in_channels, out_channels=out_channels) for i in range(num_layers)
+        ])
+        
+    def forward(self, x):
+        for layer in self.layers:
+            x = layer(x)
+            
+        return x
+
+    
 class DyHeadBlock(nn.Module):
     '''
     Scale Aware Attention:
@@ -86,8 +100,7 @@ class DyHeadBlock(nn.Module):
         parameter per pixel between [0, 1] scaling the entire value to determine its importance. Thus, the modulation mechanism 
         provides the network module another dimension of freedom to adjust its spatial support regions.
         
-        if the modulateddeformconv is too frustrating, just interpolate before spatial high conving. or, pool the mask/offset
-        tensors to the smaller spatial resolution of the feature map.
+        MMDet interpolates after spatial conv for higher feature maps, my implementation interpolate before
         '''
         out = []
         for i in range(len(x)):
